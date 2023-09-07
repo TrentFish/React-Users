@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 function App() {
   const [users, setUsers] = useState([])
+  const [hash, setHash] = useState(window.location.hash.slice(1))
 
   useEffect(() => {
     const fetchInfo = async () => {
@@ -12,6 +13,14 @@ function App() {
     fetchInfo();
   }, [])
 
+  useEffect(() => {
+    window.addEventListener('hashchange', () => {
+      setHash(window.location.hash.slice(1)*1);
+    });
+  }, [])
+
+  const user = users.find( user => hash === user.id);
+
   return (
     <div>
       <h1>Contact List ({ users.length })</h1>
@@ -19,11 +28,14 @@ function App() {
         {
           users.map(user => {
             return (
-              <li>{user.name}</li>
+              <li key={user.id} className={user.id === hash ? 'selected': ''}><a href={`#${user.id === hash ? '': user.id}`}>{user.name}</a></li>
             )
           })
         }
       </ul>
+      {
+        user ? (<h3>User's Email: {user.email}</h3>): null
+      }
     </div>
   )
 }
