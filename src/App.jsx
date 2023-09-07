@@ -36,6 +36,12 @@ function App() {
       {
         user ? (<h3>User's Email: {user.email}</h3>): null
       }
+      {
+        user ? (<h3>User's Company: {user.company.name}</h3>): null
+      }
+      {
+        user ? (<h3>User's Phone Number: {user.phone}</h3>): null
+      }
     </div>
   )
 }
